@@ -24,13 +24,12 @@ import (
 // spelunkerCmd represents the spelunker command
 var spelunkerCmd = &cobra.Command{
 	Use:   "spelunker",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Test generation",
+	Long: `Spelunker rapidly parses through an existing codebase and generates a test directory (if missing) and necessary test files and modules
+Reference the flags below for the necessary options
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Supported languages: python
+Supported libraries: requests`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("spelunker called")
 	},
