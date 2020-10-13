@@ -4,15 +4,7 @@ Orwell is an open source developer productivity CLI tool built to manage project
 
 ## Features
 
-- Gitignores pulled from Github bootstrap examples
-
-- Sets up git connections based on provided repository remote
-
-- Git hooks configured with Pre-Commit
-
-- Current environment language support: Python3
-
-- Current License support: Apache, GNUGPL v3.0, MIT
+- One line project generation
 
 ## Prerequisites
 
