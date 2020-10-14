@@ -7,6 +7,10 @@ import (
 	"fmt"
 )
 
+var valid_languages    = map[string]bool   { "python": true, }
+var valid_license      = map[string]bool   { "apache": true, "gnugpl3": true, "mit": true, }
+var license_conversion = map[string]string { "apache": Apache_str, "gnugpl3": GNUGPL3_str, "mit": MIT_str, }
+
 var coldstartCmd = &cobra.Command{
 	Use:   "coldstart",
 	Short: "Project Generation",
@@ -21,26 +25,15 @@ Supported licenses: apache, gnugpl3, mit
 		language, _ := cmd.Flags().GetString("language")
 		license, _ := cmd.Flags().GetString("license")
 		repository, _ := cmd.Flags().GetString("repository")
-		//fmt.Println(Apache_str)
-		if name != "" {
-			create_project(name)
-		} else { panic("Invalid name") }
+		if name != "" { create_project(name) } else { panic("Invalid name") }
 		if language != "" {
-			
+			if valid_languages[language] { create_language_env(language) } else { fmt.Println("Language unrecognised, use 'orwell patchfix -l' to remedy") }
 		}
 		if license != "" {
-			valid_license := map[string]bool {
-			    "apache": true,
-			    "gnugpl3": true,
-			    "mit": true,
-			}
-			if valid_license[license] {
-				create_license_file(license)
-			} else { fmt.Println("License unrecognised, use 'orwell patchfix -x' to remedy")}
+			if valid_license[license] { create_license_file(license) } else { fmt.Println("License unrecognised, use 'orwell patchfix -x' to remedy") }
 		}
-		if repository != "" {
-			
-		}
+		if repository != "" { connect_repository(repository) }
+		fmt.Printf("Project [%s] Created!\n", name)
 	},
 }
 
@@ -69,14 +62,24 @@ func create_readme(directory string, name string) {
    file_contents := []byte(readme_content)
    err = ioutil.WriteFile(file_path, file_contents, 0644); check(err)
    new_file.Close()
+   fmt.Printf("README.md Generated\n")
+}
+
+func create_language_env(language string) {
+
 }
 
 func create_license_file(license_type string) {
+   new_file, err := os.Create("LICENSE.md"); check(err)
+   wd, _ := os.Getwd()
+   file_path := wd + "/LICENSE.md"
+   err = ioutil.WriteFile(file_path, []byte(license_conversion[license_type]), 0644); check(err)
+   new_file.Close()
+   fmt.Printf("LICENSE.md Generated\n")
+}
+
+func connect_repository(repository string) {
 
 }
 
-func check(e error) {
-    if e != nil {
-        panic(e)
-    }
-}
+func check(e error) { if e != nil { panic(e) } }
