@@ -16,8 +16,8 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
-
+	"os"
+    "io/ioutil"
 	"github.com/spf13/cobra"
 )
 
@@ -33,14 +33,10 @@ Supported licenses: apache, gnugpl3, mit
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		name, _ := cmd.Flags().GetString("name")
-		language, _ := cmd.Flags().GetString("language")
-		license, _ := cmd.Flags().GetString("license")
-		repository, _ := cmd.Flags().GetString("repository")
-		fmt.Println(name)
-		fmt.Println(language)
-		fmt.Println(license)
-		fmt.Println(repository)
-		fmt.Println("coldstart ended")
+		// language, _ := cmd.Flags().GetString("language")
+		// license, _ := cmd.Flags().GetString("license")
+		// repository, _ := cmd.Flags().GetString("repository")
+		create_project(name)
 	},
 }
 
@@ -59,4 +55,29 @@ func init() {
 	coldstartCmd.Flags().StringP("language", "l", "", "Set the codebase language")
 	coldstartCmd.Flags().StringP("license", "x", "", "Set the license")
 	coldstartCmd.Flags().StringP("repository", "g", "", "Set the repository link")
+}
+
+func create_project(name string) {
+	err := os.Mkdir(name, 0755); check(err)
+	os.Chdir(name)
+	wd, _ := os.Getwd()
+    create_readme(wd, name)
+
+    // s, _ := os.Getwd()
+    // fmt.Println(s)
+}
+
+func create_readme(directory string, name string) {
+   new_file, err := os.Create("README.md"); check(err)
+   file_path := directory + "/README.md"
+   readme_content := ("# " + name + "\n\n## Features\n\n## Get Started\n\n## Usage")
+   file_contents := []byte(readme_content)
+   err = ioutil.WriteFile(file_path, file_contents, 0644); check(err)
+   new_file.Close()
+}
+
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
 }
