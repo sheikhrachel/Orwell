@@ -2,9 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
-
+	"github.com/spf13/cobra"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
@@ -14,7 +13,7 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "orwell",
 	Short: "Streamlined Developer Environment",
-	Long: `Orwell is a series of developer tools meant to handle everything from environment setup to test generations.
+	Long:  `Orwell is a series of developer tools meant to handle everything from environment setup to test generations.
 
 To start, reference the available commands below.`,
 }
