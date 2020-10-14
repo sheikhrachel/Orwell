@@ -4,7 +4,7 @@ Orwell is an open source developer productivity CLI tool built to manage project
 
 ## Features
 
-- One line project generation
+- One line project generation (README, directory, git hooks, etc.)
 
 ## Prerequisites
 
